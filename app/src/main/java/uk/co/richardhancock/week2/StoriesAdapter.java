@@ -22,11 +22,27 @@ public class StoriesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.story_list_item, parent, false);
 
-        TextView title = (TextView)view.findViewById(R.id.title);
-        title.setText( getItem(position) );
-        return view;
+        StoryViewHolder holder;
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.story_list_item, parent, false);
+
+            holder = new StoryViewHolder();
+
+            holder.title = (TextView)convertView.findViewById(R.id.title);
+            holder.subtitle = (TextView)convertView.findViewById(R.id.subtitle);
+
+            convertView.setTag(holder);
+        }
+        else
+        {
+            holder = (StoryViewHolder)convertView.getTag();
+        }
+
+        holder.title.setText( getItem(position) );
+        holder.subtitle.setText( getItem(position) );
+        return convertView;
     }
 
     @Override
