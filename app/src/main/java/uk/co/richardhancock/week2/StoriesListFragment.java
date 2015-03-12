@@ -1,6 +1,7 @@
 package uk.co.richardhancock.week2;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,9 +17,11 @@ import android.widget.Toast;
 /**
  * Created by apple on 05/03/2015.
  */
-public class StoriesListFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class StoriesListFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     private ListView listView;
+    private StoriesAdapter adapter;
+
 
 
     @Nullable
@@ -41,14 +44,26 @@ public class StoriesListFragment extends Fragment implements AdapterView.OnItemC
                 "Terry", "Bob", "Bob2", "tell", "meh", "Bob", "Bob2", "tell", "meh", "Bob", "Bob2", "tell", "meh"
         };
 
-        ListAdapter adapter = new StoriesAdapter( names);
+        adapter = new StoriesAdapter(names);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getActivity(), position + " was clicked", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), position + " was clicked", Toast.LENGTH_SHORT).show();
+        Intent details = new Intent(getActivity(), StoryDetailsActivity.class);
+
+        details.putExtra("name", adapter.getItem(position));
+
+        startActivity(details);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getActivity(), position + " was long clicked", Toast.LENGTH_SHORT).show();
+        return false;
     }
 }
