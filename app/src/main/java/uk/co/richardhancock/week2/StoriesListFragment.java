@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * Created by apple on 05/03/2015.
  */
-public class StoriesListFragment extends Fragment{
+public class StoriesListFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
 
@@ -41,5 +43,12 @@ public class StoriesListFragment extends Fragment{
 
         ListAdapter adapter = new StoriesAdapter( names);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getActivity(), position + " was clicked", Toast.LENGTH_SHORT).show();
     }
 }
